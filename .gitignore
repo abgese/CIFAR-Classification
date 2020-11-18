@@ -1,1 +1,5 @@
 .vscode
+data
+.ipynb_checkpoints
+__pycache__
+saved_models

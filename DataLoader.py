@@ -1,7 +1,7 @@
 import os
 import pickle
 import numpy as np
-
+from ImageUtils import parse_record
 """This script implements the functions for reading data.
 """
 
@@ -38,9 +38,13 @@ def load_data(data_dir):
     			X = np.append(X, np.array(data_dict[b'data']), axis = 0)
     			Y = np.append(Y, np.array(data_dict[b'labels']))
     ### END CODE HERE
-    x_train = X[:50000]
+    X_parsed = []
+    for i in range(len(X)):
+        X_parsed.append(parse_record(X[i], True))
+    X_parsed = np.array(X_parsed)
+    x_train = X_parsed[:50000]
     y_train = Y[:50000]
-    x_test = X[50000:]
+    x_test = X_parsed[50000:]
     y_test = Y[50000:]
     return x_train, y_train, x_test, y_test
 

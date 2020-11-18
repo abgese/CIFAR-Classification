@@ -1,7 +1,7 @@
 ### YOUR CODE HERE
-from tensorflow.python.keras.models import *
-from tensorflow.python.keras.layers import *
-from tensorflow.python.keras.optimizers import *
+import tensorflow as tf
+
+from tensorflow.keras import layers, models, Input, Model
 
 """This script defines the network.
 """
@@ -23,50 +23,24 @@ class MyNetwork(object):
         return self.build_network()
 
     def build_network(self):
-        inp = Input(self.configs["input_size"])
-        # Encoder
-        x = Convolution2D(64, 3, padding = "same")(inp)
-        x = BatchNormalization()(x)
-        x = Activation("relu")(x)
-        x = MaxPooling2D(pool_size=(2, 2))(x)
-        
-        x = Convolution2D(128, 3, padding = "same")(x)
-        x = BatchNormalization()(x)
-        x = Activation("relu")(x)
-        x = MaxPooling2D(pool_size=(2, 2))(x)
-        
-        x = Convolution2D(256, 3, padding = "same")(x)
-        x = BatchNormalization()(x)
-        x = Activation("relu")(x)
-        x = MaxPooling2D(pool_size=(2, 2))(x)
-        
-        x = Convolution2D(512, 3, padding = "same")(x)
-        x = BatchNormalization()(x)
-        x = Activation("relu")(x)
-        
-        # Decoder
-        x = Convolution2D(512, 3, padding = "same")(x)
-        x = BatchNormalization()(x)
-        x = Activation("relu")(x)
-        
-        x = UpSampling2D(size=(2, 2))(x)
-        x = Convolution2D(256, 3, padding = "same")(x)
-        x = BatchNormalization()(x)
-        x = Activation("relu")(x)
-        
-        x = UpSampling2D(size=(2, 2))(x)
-        x = Convolution2D(128, 3, padding = "same")(x)
-        x = BatchNormalization()(x)
-        x = Activation("relu")(x)
-        
-        x = UpSampling2D(size=(2, 2))(x)
-        x = Convolution2D(64, 3, padding = "same")(x)
-        x = BatchNormalization()(x)
-        x = Activation("relu")(x)
-        
-        x = Dense(self.configs["num_classes"])
-        x = Activation("softmax")(x)
-        model = Model(inputs = inp, outputs = x)
+
+        inp = Input(shape=self.configs["input_size"])
+
+        x = layers.Conv2D(32, (3, 3), activation='relu', kernel_initializer="glorot_normal")(inp)
+        x = layers.BatchNormalization()(x)
+        x = layers.MaxPooling2D((2, 2))(x)
+        x = layers.Conv2D(64, (3, 3), kernel_initializer="glorot_normal", activation='relu')(x)
+        x = layers.BatchNormalization()(x)
+        x = layers.MaxPooling2D((2, 2))(x)
+        x = layers.Conv2D(64, (3, 3), kernel_initializer="glorot_normal", activation='relu')(x)
+        x = layers.BatchNormalization()(x)
+        x = layers.Flatten()(x)
+        x = layers.Dense(64, kernel_initializer="glorot_normal", activation='relu')(x)
+        out = layers.Dense(10)(x)
+
+        model = Model(inputs=inp, outputs=out, name="cifar_10_model")
+
+        return model
 
 
 ### END CODE HERE

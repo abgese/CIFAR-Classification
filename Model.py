@@ -16,22 +16,17 @@ class MyModel(object):
         self.training_configs = training_configs
         self.network = MyNetwork(model_configs)
         self.model = self.network()
+        self.model_setup()
 
     def model_setup(self):
         self.model.compile(
-            optimizer = Adam(
-                lr=self.training_configs["learning_rate"], 
-                beta_1=self.training_configs["beta_1"], 
-                beta_2=self.training_configs["beta_2"], 
-                epsilon=self.training_configs["epsilon"], 
-                decay=self.training_configs["decay"], 
-                amsgrad=True), 
-            loss = self.training_configs["loss"], 
-            metrics = ['accuracy'])
+            optimizer=self.training_configs['optimizer'],
+            loss=self.training_configs['loss'],
+            metrics=['accuracy'])
 
     def train(self, x_train, y_train, x_valid=None, y_valid=None):
-        if x_valid:
-            validation_data = (x_val, y_val)
+        if x_valid is not None:
+            validation_data = (x_valid, y_valid)
         else:
             validation_data = None
         self.model.fit(
