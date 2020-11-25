@@ -28,15 +28,15 @@ def load_data(data_dir):
     Y = np.array([])
     first = True
     for file_name in os.listdir(data_dir):
-    	with open(data_dir + "\\" + file_name, 'rb') as f:
-    		data_dict = pickle.load(f, encoding='bytes')
-    		if(first):
-    			X = np.array(data_dict[b'data'])
-    			Y = np.array(data_dict[b'labels'])
-    			first = False
-    		else:
-    			X = np.append(X, np.array(data_dict[b'data']), axis = 0)
-    			Y = np.append(Y, np.array(data_dict[b'labels']))
+    	with open(os.path.join(data_dir, file_name), 'rb') as f:
+            data_dict = pickle.load(f, encoding='bytes')
+            if(first):
+                X = np.array(data_dict[b'data'])
+                Y = np.array(data_dict[b'labels'])
+                first = False
+            else:
+                X = np.append(X, np.array(data_dict[b'data']), axis = 0)
+                Y = np.append(Y, np.array(data_dict[b'labels']))
     ### END CODE HERE
     X_parsed = []
     for i in range(len(X)):
@@ -48,7 +48,7 @@ def load_data(data_dir):
     y_test = Y[50000:]
     return x_train, y_train, x_test, y_test
 
-def load_testing_images(data_dir):
+def load_testing_images(data_file):
     """Load the images in private testing dataset.
 
     Args:
@@ -61,7 +61,11 @@ def load_testing_images(data_dir):
     """
 
     ### YOUR CODE HERE
-    
+    X = np.load(data_file)
+    x_test = []
+    for x in X:
+        x_test.append(parse_record(X[i], False))
+    x_test = np.array(x_test)
     ### END CODE HERE
 
     return x_test
