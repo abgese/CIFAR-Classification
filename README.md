@@ -20,3 +20,6 @@ python main.py --mode="test" ---test_file"<TEST(npy) file>" --save_dir="<SAVED_M
 * Python==3.6
 * tensorflow==2.2.0
 * numpy==1.16.5
+
+# Dataset Used:
+[CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html)
