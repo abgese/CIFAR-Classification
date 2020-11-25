@@ -4,14 +4,14 @@
 import os, argparse
 import numpy as np
 from Model import MyModel
-from DataLoader import load_data, train_valid_split
+from DataLoader import load_data, train_valid_split, load_testing_images
 from Configure import model_configs, training_configs
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--mode", help="train, test or predict")
 parser.add_argument("--data_dir", help="path to the data")
-parser.add_argument("--test_file", help="path to the data")
+parser.add_argument("--test_file", help="path to the test file")
 parser.add_argument("--save_dir", help="path to save the results")
 args = parser.parse_args()
 
@@ -37,7 +37,8 @@ if __name__ == '__main__':
 		model.load_weights(os.path.join(args.save_dir, model_configs["version"], ""))
 		x_test = load_testing_images(args.test_file)
 		predictions = model.predict_prob(x_test)
-		np.save(args.result_dir, predictions)
+		np.save("final_pred_"+ model_configs["version"] + ".npy", predictions)
+
 		
 
 ### END CODE HERE

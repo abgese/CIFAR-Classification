@@ -64,7 +64,7 @@ def load_testing_images(data_file):
     X = np.load(data_file)
     x_test = []
     for x in X:
-        x_test.append(parse_record(X[i], False))
+        x_test.append(parse_record(x, False))
     x_test = np.array(x_test)
     ### END CODE HERE
 
