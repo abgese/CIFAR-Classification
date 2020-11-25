@@ -1,5 +1,5 @@
 # COMMANDS TO TRAIN, TEST & PREDICT
-
+**For the data_dir arg, don't include the version folder**
 ## TRAIN:
 
 python main.py --mode="train" --data_dir="<DATA_DIR>" --save_dir="<SAVED_MODEL_DIR>"
@@ -19,7 +19,7 @@ python main.py --mode="test" ---test_file"<TEST(npy) file>" --save_dir="<SAVED_M
 # Installations required
 * Python==3.6
 * tensorflow==2.2.0
-* numpy==1.16.5
+* numpy==1.19.2
 
 # Dataset Used:
 [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html)
