@@ -1,7 +1,7 @@
 import os
 import pickle
 import numpy as np
-from ImageUtils import parse_record
+from ImageUtils import parse_record, preprocess_image
 """This script implements the functions for reading data.
 """
 
@@ -64,7 +64,7 @@ def load_testing_images(data_file):
     X = np.load(data_file)
     x_test = []
     for x in X:
-        x_test.append(parse_record(x, False))
+        x_test.append(preprocess_image(x, False))
     x_test = np.array(x_test)
     ### END CODE HERE
 
